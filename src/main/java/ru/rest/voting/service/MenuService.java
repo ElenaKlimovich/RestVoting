@@ -3,6 +3,7 @@ package ru.rest.voting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import ru.rest.voting.model.Menu;
 import ru.rest.voting.repository.MenuRepository;
 import ru.rest.voting.repository.RestaurantRepository;
@@ -33,14 +34,17 @@ public class MenuService {
     }
 
     @Transactional
-    public void save(Menu menu, int restId) {
+    public Menu create(Menu menu, int restId) {
+        Assert.notNull(menu, "Menu must not be null");
         menu.setRestaurant(restaurantRepository.getOne(restId));
-        menuRepository.save(menu);
+        return menuRepository.save(menu);
     }
 
     @Transactional
     public void update(Menu menu, int restId) throws NotFoundException {
-        save(get(menu.getId(), restId), restId);
+        menu.setRestaurant(restaurantRepository.getOne(restId));
+        Assert.notNull(menu, "Menu must not be null");
+        menuRepository.save(menu);
     }
 
     public void delete(int id, int restId) {

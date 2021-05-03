@@ -45,11 +45,11 @@ CREATE TABLE menus
 
 CREATE TABLE votes
 (
-    id        INTEGER   DEFAULT nextval('global_seq') PRIMARY KEY,
-    date_time TIMESTAMP DEFAULT now() NOT NULL,
-    user_id   INTEGER                 NOT NULL,
-    rest_id   INTEGER                 NOT NULL,
-    CONSTRAINT votes_unique_date_user_rest_idx UNIQUE (date_time, user_id, rest_id),
+    id      INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
+    date    DATE    DEFAULT now() NOT NULL,
+    user_id INTEGER               NOT NULL,
+    rest_id INTEGER               NOT NULL,
+    CONSTRAINT votes_unique_date_user_idx UNIQUE (date, user_id),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (rest_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );

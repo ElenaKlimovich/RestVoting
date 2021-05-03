@@ -37,7 +37,7 @@ public class RestaurantService {
         return repository.findWithMenus(id, dateTime);
     }
 
-    public Restaurant save(Restaurant restaurant) {
+    public Restaurant create(Restaurant restaurant) {
         return repository.save(restaurant);
     }
 
@@ -48,8 +48,4 @@ public class RestaurantService {
     public void delete(int id) {
         repository.delete(get(id));
     }
-
-//    public List<Menu> getMenus(int id) {
-//        return get(id).getMenus();
-//    }
 }

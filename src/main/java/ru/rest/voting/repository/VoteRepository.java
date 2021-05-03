@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rest.voting.model.Vote;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,9 +13,5 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
-    List<Vote> findByUser(int userId);
-
-    List<Vote> findByRestaurant(int restId);
-
-    Vote findByUserIdAndDateTime(int userId, LocalDateTime dateTime);
+    Vote findByUserIdAndDate(int userId, LocalDate date);
 }

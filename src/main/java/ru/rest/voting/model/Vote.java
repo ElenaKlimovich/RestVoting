@@ -5,16 +5,17 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "votes", uniqueConstraints = @UniqueConstraint
-        (name = "votes_unique_date_user_rest_idx", columnNames = {"date_time", "user_id", "rest_id"}))
+        (name = "votes_unique_date_user_idx", columnNames = {"date", "user_id"}))
 public class Vote extends AbstractBaseEntity {
 
-    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "date")
     @NotNull
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -31,25 +32,30 @@ public class Vote extends AbstractBaseEntity {
     public Vote() {
     }
 
-    public Vote(LocalDateTime dateTime, User user, Restaurant restaurant) {
-        this.dateTime = dateTime;
-        this.user = user;
-        this.restaurant = restaurant;
-    }
-
-    public Vote(Integer id, LocalDateTime dateTime, User user, Restaurant restaurant) {
+    public Vote(Integer id, LocalDate date) {
         super(id);
-        this.dateTime = dateTime;
+        this.date = date;
+    }
+
+    public Vote(User user, Restaurant restaurant) {
+        this.date = LocalDate.now();
         this.user = user;
         this.restaurant = restaurant;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Vote(Integer id, LocalDate date, User user, Restaurant restaurant) {
+        super(id);
+        this.date = date;
+        this.user = user;
+        this.restaurant = restaurant;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public User getUser() {

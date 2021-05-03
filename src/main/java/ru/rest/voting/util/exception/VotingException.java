@@ -1,10 +1,8 @@
 package ru.rest.voting.util.exception;
 
-import java.time.LocalTime;
-
 public class VotingException extends RuntimeException {
 
-    public VotingException(LocalTime deadline) {
-        super("Can't change vote after " + deadline.toString());
+    public VotingException() {
+        super("Can't change vote after 11-00");
     }
 }

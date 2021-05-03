@@ -9,6 +9,7 @@ import ru.rest.voting.repository.UserRepository;
 import ru.rest.voting.repository.VoteRepository;
 import ru.rest.voting.util.exception.VotingException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -29,37 +30,31 @@ public class VoteService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    private void save(int userId, int restId) {
+    private Vote create(int userId, int restId) {
         Vote vote = new Vote();
         vote.setUser(userRepository.getOne(userId));
         vote.setRestaurant(restaurantRepository.getOne(restId));
-        voteRepository.save(vote);
+        return voteRepository.save(vote);
     }
 
-    private void update(Vote vote, int userId, int restId) {
+    private Vote update(Vote vote, int userId, int restId) {
+        vote.setDate(LocalDate.now());
         vote.setUser(userRepository.getOne(userId));
         vote.setRestaurant(restaurantRepository.getOne(restId));
-        voteRepository.save(vote);
-    }
-
-    public List<Vote> getByUser(int userId) {
-        return voteRepository.findByUser(userId);
-    }
-
-    public List<Vote> getByRestaurant(int restId) {
-        return voteRepository.findByRestaurant(restId);
+        return voteRepository.save(vote);
     }
 
     @Transactional
-    public void vote(int userId, int restId) throws VotingException {
-        Vote vote = voteRepository.findByUserIdAndDateTime(userId, LocalDateTime.now());
+    public Vote vote(int userId, int restId) throws VotingException {
+        Vote vote = voteRepository.findByUserIdAndDate(userId, LocalDate.now());
         if (vote == null) {
-            save(userId, restId);
+            vote = create(userId, restId);
         } else {
             if (LocalTime.now().isAfter(VOTE_DEADLINE))
-                throw new VotingException(VOTE_DEADLINE);
+                throw new VotingException();
             else
-                update(vote, userId, restId);
+                vote = update(vote, userId, restId);
         }
+        return vote;
     }
 }
