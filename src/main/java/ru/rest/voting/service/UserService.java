@@ -13,19 +13,19 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
     private final UserRepository repository;
 
+    @Autowired
     public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
-    public List<User> getAll() {
-        return repository.findAll();
+    public User get(int id) {
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND + " id = " + id));
     }
 
-    public User getById(int id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND + " id = " + id));
+    public List<User> getAll() {
+        return repository.findAll();
     }
 
     public User getByEmail(String email) {

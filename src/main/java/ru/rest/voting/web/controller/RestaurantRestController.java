@@ -12,6 +12,7 @@ import ru.rest.voting.service.RestaurantService;
 import ru.rest.voting.to.RestaurantTo;
 import ru.rest.voting.util.RestaurantUtil;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -36,12 +37,12 @@ public class RestaurantRestController {
     @GetMapping("{id}")
     public RestaurantTo get(@PathVariable("id") int id) {
         log.info("Get restaurant with id: {} ", id);
-        return RestaurantUtil.createRestaurantTo(service.getById(id));
+        return RestaurantUtil.createRestaurantTo(service.get(id));
     }
 
-    @GetMapping("meals/{id}")
-    public List<Menu> getMenus(@PathVariable("id") int id) {
-        log.info("Menu for restaurant with id: {} ", id);
-        return service.getMenus(id);
-    }
+//    @GetMapping("meals/{id}")
+//    public List<Menu> getMenus(@PathVariable("id") int id) {
+//        log.info("Menu for restaurant with id: {} ", id);
+//        return service.getWithMenus(id, LocalDateTime.now());
+//    }
 }

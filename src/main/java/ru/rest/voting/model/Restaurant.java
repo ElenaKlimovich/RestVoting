@@ -1,22 +1,24 @@
 package ru.rest.voting.model;
 
+import org.hibernate.annotations.BatchSize;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "restaurants", uniqueConstraints = @UniqueConstraint
+        (name = "restaurants_unique_name_address_idx", columnNames = {"name", "address"}))
 public class Restaurant extends AbstractNamedEntity {
 
+    @Column(name = "address", nullable = false)
     @NotBlank
     @Size(min = 5, max = 200)
-    @Column(name = "address", nullable = false)
     private String address;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "menus", joinColumns = @JoinColumn(name = "rest_id"))
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rest_id")
+    @BatchSize(size = 200)
     private List<Menu> menus;
 
     @ElementCollection(fetch = FetchType.LAZY)
