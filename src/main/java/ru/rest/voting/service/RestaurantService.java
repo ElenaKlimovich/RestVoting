@@ -3,7 +3,6 @@ package ru.rest.voting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.rest.voting.model.Menu;
 import ru.rest.voting.model.Restaurant;
 import ru.rest.voting.repository.RestaurantRepository;
 import ru.rest.voting.util.exception.NotFoundException;

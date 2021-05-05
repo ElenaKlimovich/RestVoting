@@ -1,6 +1,8 @@
 package ru.rest.voting.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -29,10 +31,12 @@ public class MenuService {
         return (menu != null && menu.getRestaurant().getId() == restId) ? menu : null;
     }
 
+    @Cacheable(value = "menus")
     public List<Menu> getAll(int restId, LocalDateTime dateTime) {
         return menuRepository.findAllByRestaurantAndDateTime(restId, dateTime);
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @Transactional
     public Menu create(Menu menu, int restId) {
         Assert.notNull(menu, "Menu must not be null");
@@ -40,6 +44,7 @@ public class MenuService {
         return menuRepository.save(menu);
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @Transactional
     public void update(Menu menu, int restId) throws NotFoundException {
         menu.setRestaurant(restaurantRepository.getOne(restId));
@@ -47,6 +52,7 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     public void delete(int id, int restId) {
         menuRepository.delete(get(id, restId));
     }
