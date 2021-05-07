@@ -4,6 +4,7 @@
 
 Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.
 
+---
 ### **Task:**
 
 Build a voting system for deciding where to have lunch.
@@ -18,3 +19,12 @@ Build a voting system for deciding where to have lunch.
   If it is after 11:00 then it is too late, vote can't be changed
 
 Each restaurant provides a new menu each day.
+
+---
+
+#### **cURL commands for testing REST API:**
+
+
+Get all restaurants  ==> `curl localhost:8080/restaurants`
+
+Create new restaurant ==> `curl -X POST -d '{"name":"New Restaurant","address":"Arbat str, 7"}' localhost:8080/admin/restaurants -H 'Content-type:application/json'`
