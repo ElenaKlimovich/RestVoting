@@ -17,12 +17,12 @@ public class Restaurant extends AbstractNamedEntity {
     @Size(min = 5, max = 200)
     private String address;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rest_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @BatchSize(size = 200)
     private List<Menu> menus;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "votes", joinColumns = @JoinColumn(name = "rest_id"))
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @BatchSize(size = 200)
     private List<Vote> votes;
 
     public Restaurant() {

@@ -6,44 +6,44 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "menus", uniqueConstraints = @UniqueConstraint
-        (name = "menus_unique_name_date_rest_idx", columnNames = {"name", "date_time", "rest_id"}))
+        (name = "menus_unique_name_date_rest_idx", columnNames = {"name", "date", "rest_id"}))
 public class Menu extends AbstractNamedEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
-    @Range(min = 1, max = 1000)
+    @Range(min = 1, max = 50000)
     private Integer price;
 
-    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "date", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rest_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Restaurant restaurant;
 
     public Menu() {
     }
 
-    public Menu(Integer id, String name, Integer price, LocalDateTime dateTime, Restaurant restaurant) {
+    public Menu(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
         super(id, name);
         this.price = price;
-        this.dateTime = dateTime;
+        this.date = date;
         this.restaurant = restaurant;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Integer getPrice() {

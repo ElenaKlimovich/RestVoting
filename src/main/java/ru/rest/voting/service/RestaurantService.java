@@ -7,6 +7,7 @@ import ru.rest.voting.model.Restaurant;
 import ru.rest.voting.repository.RestaurantRepository;
 import ru.rest.voting.util.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,19 +22,19 @@ public class RestaurantService {
     }
 
     public Restaurant get(int id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND + " id = " + id));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Restaurant with id = " + id + " not found"));
     }
 
     public List<Restaurant> getAll() {
         return repository.findAll();
     }
 
-    public List<Restaurant> getAllWithMenus(LocalDateTime dateTime) {
-        return repository.findAllWithMenus(dateTime);
+    public List<Restaurant> getAllWithMenus(LocalDate date) {
+        return repository.findAllWithMenus(date);
     }
 
-    public Restaurant getWithMenus(int id, LocalDateTime dateTime) {
-        return repository.findWithMenus(id, dateTime);
+    public Restaurant getWithMenus(int id, LocalDate date) {
+        return repository.findWithMenus(id, date);
     }
 
     public Restaurant create(Restaurant restaurant) {

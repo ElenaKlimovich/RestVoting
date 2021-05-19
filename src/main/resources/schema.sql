@@ -34,12 +34,12 @@ CREATE TABLE restaurants
 
 CREATE TABLE menus
 (
-    id        INTEGER   DEFAULT nextval('global_seq') PRIMARY KEY,
-    name      VARCHAR                 NOT NULL,
-    price     INTEGER                 NOT NULL,
-    date_time TIMESTAMP DEFAULT now() NOT NULL,
-    rest_id   INTEGER                 NOT NULL,
-    CONSTRAINT menus_unique_name_date_rest_idx UNIQUE (name, date_time, rest_id),
+    id      INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
+    name    VARCHAR               NOT NULL,
+    price   INTEGER               NOT NULL,
+    date    DATE    DEFAULT now() NOT NULL,
+    rest_id INTEGER               NOT NULL,
+    CONSTRAINT menus_unique_name_date_rest_idx UNIQUE (name, date, rest_id),
     FOREIGN KEY (rest_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );
 

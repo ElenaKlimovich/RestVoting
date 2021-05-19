@@ -23,7 +23,7 @@ VALUES ('MAXIMA PIZZA', 'Arbat st., 15'),
        ('BEEF&BEER', 'Novocheremushkinskaya st., 28'),
        ('BURGERMAC', 'Petrovka st., 3');
 
-INSERT INTO menus(name, price, date_time, rest_id)
+INSERT INTO menus(name, price, date, rest_id)
 VALUES ('Meal1', 100, '2020-11-11', 100003),
        ('Meal2', 120, '2020-11-12', 100003),
        ('Meal3', 130, '2020-11-13', 100003),
@@ -40,7 +40,7 @@ VALUES ('Meal1', 100, '2020-11-11', 100003),
        ('Meal14', 240, '2020-11-12', 100007),
        ('Meal15', 250, '2020-11-13', 100007);
 
-INSERT INTO votes (user_id, rest_id, date_time)
+INSERT INTO votes (user_id, rest_id, date)
 VALUES (100000, 100003, '2020-11-11'),
        (100000, 100004, '2020-11-12'),
        (100000, 100005, '2020-11-13'),
